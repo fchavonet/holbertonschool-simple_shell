@@ -17,6 +17,7 @@ int free_buffers(char *user_input, char *cmd, char **args)
 	}
 	if (args != NULL)
 	{
+		/* think to free [i] args */
 		free(args);
 	}
 	return (0);
@@ -31,7 +32,7 @@ int free_buffers(char *user_input, char *cmd, char **args)
 char **build_args(char *cmd)
 {
 	unsigned int i = 0;
-	unsigned int count = 1;
+	unsigned int count = 0;
 	char *token;
 	char **args = NULL;
 
@@ -44,7 +45,8 @@ char **build_args(char *cmd)
 		i++;
 	}
 
-	args = malloc(sizeof(char *) * count);
+/* ne pas oublier d'ajouter 1 au count pour le malloc si on ajoute --color=auto */
+	args = malloc(sizeof(char *) * count + 1);
 	if (args == NULL)
 	{
 		perror("Memory allocation failed");
@@ -60,11 +62,13 @@ char **build_args(char *cmd)
 	{
 		args[i] = strdup(token);
 		token = strtok(NULL, " ");
+
 		/* j'ai incrémenté i, on l'avais oublié je pense */
 		i++;
 	}
 
-	/* j'ai ajouté lme return de args */
+	/* j'ai ajouté lme return de args et un ull à la fin de args */
+	args[i] = NULL;
 	return (args);
 }
 
