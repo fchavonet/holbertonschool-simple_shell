@@ -1,4 +1,5 @@
 #include "main.h"
+
 /**
  * free_buffers - frees allocated variables
  *
@@ -32,11 +33,11 @@ char **build_args(char *cmd)
 	unsigned int i = 0;
 	unsigned int count = 1;
 	char *token;
-	char ** args = NULL;
+	char **args = NULL;
 
 	while (cmd[i] != '\0')
 	{
-		if (cmd[i] = ' ')
+		if (cmd[i] == ' ')
 		{
 			count++;
 		}
@@ -49,12 +50,22 @@ char **build_args(char *cmd)
 		perror("Memory allocation failed");
 		exit(EXIT_FAILURE);
 	}
+
 	i = 0;
+
+	/* j'ai tokenisé ici directement */
+	token = strtok(cmd, " ");
+
 	while (token != NULL)
 	{
-		token = strtok(NULL, " ");
 		args[i] = strdup(token);
+		token = strtok(NULL, " ");
+		/* j'ai incrémenté i, on l'avais oublié je pense */
+		i++;
 	}
+
+	/* j'ai ajouté lme return de args */
+	return (args);
 }
 
 // /**
@@ -76,12 +87,12 @@ int main(int ac, char **av, char **env)
 	// atoi(getenv("ARG_MAX"));
 	char *user_input = NULL;
 	char *cmd = NULL;
-	char *token = NULL;
+	// char *token = NULL;
 	ssize_t getline_result = 0;
 	int execve_result = 0;
 	pid_t child_pid = 0;
 	int status = 0;
-	char ** args = NULL;
+	char **args = NULL;
 
 	// char *tmp_av[2];
 	// tmp_av[0] = "-1";
@@ -96,19 +107,27 @@ int main(int ac, char **av, char **env)
 			printf("\n");
 			exit(EXIT_SUCCESS);
 		}
-		token = strtok(cmd, " ");
-		//token[strlen(token) - 1] = '\0';
-		printf("[%s] is %lu chars long.\n", cmd, strlen(cmd));
-		if (strcmp(token, "exit\n") == 0)
+
+		/* token = strtok(cmd, " ");
+		   token[strlen(token) - 1] = '\0';
+		   printf("[%s] is %lu chars long.\n", cmd, strlen(cmd)); */
+
+		/* ici j'ai remplacé token par cmd pour que exit remarche (j'ai testé au pif, et ça marche :s */
+		if (strcmp(cmd, "exit\n") == 0)
 		{
 			free_buffers(user_input, cmd, args);
 			exit(EXIT_SUCCESS);
 		}
+
+		/* j'ai remis ça pour supprimer le saut de ligne qu'on avaiot enlevé, sinon ça marchait pas, c'est chat GPT qui m'a résolu ce soucis */
+		cmd[strlen(cmd) - 1] = '\0';
+
 		args = build_args(cmd);
 		child_pid = fork();
 		if (child_pid == 0)
 		{
-			execve_result = execve(token, args, env);
+			/* ici j'ai remplacé token par args[0] vu que j'ai tokenisé dans la fonction */
+			execve_result = execve(args[0], args, env);
 			exit(1);
 		}
 		else if (child_pid > 0)
