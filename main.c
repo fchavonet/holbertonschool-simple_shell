@@ -91,32 +91,33 @@ char *build_cmd_path(char *cmd, char *path)
 	token = strtok(path_copy, ":");
 	while (token != NULL)
 	{
+		// path_dirs[i] = malloc(sizeof(char) * strlen(token));
+		// strcpy(path_dirs[i], token);
 		path_dirs[i] = strdup(token);
 		i++;
 		token = strtok(NULL, ":");
 	}
 	path_dirs[i] = NULL;
-
+	free(path_copy);
+	built_path = malloc(sizeof(char) * 256);
 	for (i = 0; path_dirs[i] != NULL; i++)
 	{
-		path_dirs[i] = strcat(path_dirs[i], "/");
-		path_dirs[i] = strcat(path_dirs[i], cmd);
-		printf("[%s]\t", path_dirs[i]);
-		if(access(path_dirs[i], X_OK) == 0)
+		sprintf(built_path, "%s/%s", path_dirs[i], cmd);
+		if(access(built_path, X_OK) == 0)
 		{
-			printf("Found you ! ");
-			printf("%s\n", path_dirs[i]);
-			built_path = strdup(path_dirs[i]);
-			for(i = 0; path_dirs[i] != NULL; i++)
-			{
-				free(path_dirs[i]);
-			}
-			free(path_copy);
-			printf("Returning [%s]\n", built_path);
+			// printf("Found you ! ");
+			// printf("%s\n", path_dirs[i]);
+			// for(i = 0; i != 1024; i++)
+			// {
+			// 	free(path_dirs[i]);
+			// }
+
+			// printf("Returning [%s]\n", built_path);
 			return (built_path);
 		}
 	}
-	return (built_path);
+	//free(path_copy);
+	return (NULL);
 }
 
 /**
