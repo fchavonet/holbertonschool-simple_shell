@@ -17,7 +17,7 @@ int free_buffers(char *user_input, char *cmd, char **args)
 	}
 	if (args != NULL)
 	{
-		/* think to free [i] args */
+		/* think to free args[i] */
 		free(args);
 	}
 	return (0);
@@ -45,7 +45,7 @@ char **build_args(char *cmd)
 		i++;
 	}
 
-/* ne pas oublier d'ajouter 1 au count pour le malloc si on ajoute --color=auto */
+	/* ne pas oublier d'ajouter 1 au count pour le malloc si on ajoute --color=auto */
 	args = malloc(sizeof(char *) * count + 1);
 	if (args == NULL)
 	{
@@ -72,13 +72,52 @@ char **build_args(char *cmd)
 	return (args);
 }
 
-// /**
-//  * execute_cmd - executes a command from the given path string
-//  * @path: given path string
-//  *
-//  * Return: execve return value
-// */
-// int execute_cmd()
+/**
+ * build_cmd_path - builds path of the executable from given command string
+ * @cmd: given command string
+ * @path: raw PATH string
+ *
+ * Return: built path string
+ */
+char *build_cmd_path(char *cmd, char *path)
+{
+	char *path_copy = NULL;
+	char *token = NULL;
+	unsigned int i = 0;
+	char *path_dirs[1024];
+	path_copy = strdup(path);
+	char *built_path = NULL;
+
+	token = strtok(path_copy, ":");
+	while (token != NULL)
+	{
+		path_dirs[i] = strdup(token);
+		i++;
+		token = strtok(NULL, ":");
+	}
+	path_dirs[i] = NULL;
+
+	for (i = 0; path_dirs[i] != NULL; i++)
+	{
+		path_dirs[i] = strcat(path_dirs[i], "/");
+		path_dirs[i] = strcat(path_dirs[i], cmd);
+		printf("[%s]\t", path_dirs[i]);
+		if(access(path_dirs[i], X_OK) == 0)
+		{
+			printf("Found you ! ");
+			printf("%s\n", path_dirs[i]);
+			built_path = strdup(path_dirs[i]);
+			for(i = 0; path_dirs[i] != NULL; i++)
+			{
+				free(path_dirs[i]);
+			}
+			free(path_copy);
+			printf("Returning [%s]\n", built_path);
+			return (built_path);
+		}
+	}
+	return (built_path);
+}
 
 /**
  * main - temporary, for testing purposes
@@ -91,16 +130,11 @@ int main(int ac, char **av, char **env)
 	// atoi(getenv("ARG_MAX"));
 	char *user_input = NULL;
 	char *cmd = NULL;
-	// char *token = NULL;
 	ssize_t getline_result = 0;
 	int execve_result = 0;
 	pid_t child_pid = 0;
 	int status = 0;
 	char **args = NULL;
-
-	// char *tmp_av[2];
-	// tmp_av[0] = "-1";
-	// tmp_av[1] = NULL;
 
 	while (1)
 	{
@@ -111,10 +145,6 @@ int main(int ac, char **av, char **env)
 			printf("\n");
 			exit(EXIT_SUCCESS);
 		}
-
-		/* token = strtok(cmd, " ");
-		   token[strlen(token) - 1] = '\0';
-		   printf("[%s] is %lu chars long.\n", cmd, strlen(cmd)); */
 
 		/* ici j'ai remplacé token par cmd pour que exit remarche (j'ai testé au pif, et ça marche :s */
 		if (strcmp(cmd, "exit\n") == 0)
@@ -127,6 +157,8 @@ int main(int ac, char **av, char **env)
 		cmd[strlen(cmd) - 1] = '\0';
 
 		args = build_args(cmd);
+		//free(args[0]);
+		args[0] = build_cmd_path(cmd, getenv("PATH"));
 		child_pid = fork();
 		if (child_pid == 0)
 		{
