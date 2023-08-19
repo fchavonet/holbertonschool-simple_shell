@@ -1,30 +1,6 @@
 #include "main.h"
 
 /**
- * free_buffers - frees allocated variables
- *
- * Return: 0
- */
-int free_buffers(char *cmd, char **args)
-{
-	unsigned int i = 0;
-	if (cmd != NULL)
-	{
-		free(cmd);
-	}
-	if (args != NULL)
-	{
-		while (args[i] != NULL)
-		{
-			free(args[i]);
-			i++;
-		}
-		free(args);
-	}
-	return (0);
-}
-
-/**
  * build_args - initialize an array of strings containing arguments
  * @cmd: given command string
  *
@@ -60,14 +36,14 @@ char **build_args(char *cmd)
 		i = 0;
 		while (token != NULL)
 		{
-			args[i] = strdup(token);
+			args[i] = token;
 			token = strtok(NULL, " ");
 			i++;
 		}
 	}
 	else
 	{
-		args[0] = strdup(cmd);
+		args[0] = cmd;
 		i = 1;
 	}
 	args[i] = NULL;
@@ -90,18 +66,10 @@ char *build_cmd_path(char *cmd, char *path)
 	char *built_path = NULL;
 
 	path_copy = strdup(path);
-	// built_path = malloc(sizeof(char) * 256);
-	// if (built_path == NULL)
-	// {
-	// 	perror("malloc failed.");
-	// 	exit(EXIT_FAILURE);
-	// }
 
 	token = strtok(path_copy, ":");
 	while (token != NULL)
 	{
-		// path_dirs = malloc(sizeof(char) * (strlen(token) + 1));
-		// strcpy(path_dirs, token);
 		path_dirs = strdup(token);
 		built_path = malloc(strlen(path_dirs) + strlen(cmd) + 2);
 		if (built_path == NULL)
@@ -147,7 +115,6 @@ int main(int ac __attribute__((unused)), char **av __attribute__((unused)), char
 		getline_result = getline(&cmd, &max_cmd_length, stdin);
 		if (getline_result == EOF)
 		{
-			// free_buffers(cmd, args);
 			free(cmd);
 			printf("\n");
 			exit(EXIT_SUCCESS);
@@ -155,15 +122,11 @@ int main(int ac __attribute__((unused)), char **av __attribute__((unused)), char
 
 		if (strcmp(cmd, "exit\n") == 0)
 		{
-			// free_buffers(cmd, args);
 			free(cmd);
 			exit(EXIT_SUCCESS);
 		}
-
 		cmd[strlen(cmd) - 1] = '\0';
-
 		args = build_args(cmd);
-		free(args[0]);
 		args[0] = build_cmd_path(cmd, getenv("PATH"));
 		child_pid = fork();
 		if (child_pid == 0)
@@ -179,15 +142,8 @@ int main(int ac __attribute__((unused)), char **av __attribute__((unused)), char
 		{
 			perror("execve process failed.");
 		}
-		if (args != NULL)
-		{
-			while (args[i] != NULL)
-			{
-				free(args[i]);
-				i++;
-			}
-			free(args);
-		}
+		free(args[0]);
+		free(args);
 	}
 	return (0);
 }
