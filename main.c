@@ -66,7 +66,7 @@ char **build_args(char *cmd)
 	}
 
 	args[i] = NULL;
-	free(token);
+	//free(token);
 	return (args);
 }
 
@@ -79,6 +79,7 @@ char **build_args(char *cmd)
  */
 char *build_cmd_path(char *cmd, char *path)
 {
+
 	char *path_copy = NULL;
 	char *token = NULL;
 	char *path_dirs = NULL;
@@ -92,16 +93,16 @@ char *build_cmd_path(char *cmd, char *path)
 	{
 		path_dirs = strdup(token);
 		sprintf(built_path, "%s/%s", path_dirs, cmd);
-		free(path_dirs);
+		//free(path_dirs);
 		if (access(built_path, X_OK) == 0)
 		{
-			free(path_copy);
+			//free(path_copy);
 			return (built_path);
 		}
 		token = strtok(NULL, ":");
 	}
-	free(built_path);
-	free(path_copy);
+	//free(built_path);
+	//free(path_copy);
 	return (NULL);
 }
 
@@ -112,6 +113,8 @@ char *build_cmd_path(char *cmd, char *path)
  */
 int main(int ac __attribute__((unused)), char **av __attribute__((unused)), char **env)
 {
+
+	int i = 0;
 	size_t max_cmd_length = 4096;
 	/* atoi(getenv("ARG_MAX")) */
 	ssize_t getline_result = 0;
@@ -126,21 +129,21 @@ int main(int ac __attribute__((unused)), char **av __attribute__((unused)), char
 		getline_result = getline(&cmd, &max_cmd_length, stdin);
 		if (getline_result == EOF)
 		{
-			free_buffers(cmd, args);
+			//free_buffers(cmd, args);
 			printf("\n");
 			exit(EXIT_SUCCESS);
 		}
 
 		if (strcmp(cmd, "exit\n") == 0)
 		{
-			free_buffers(cmd, args);
+			//free_buffers(cmd, args);
 			exit(EXIT_SUCCESS);
 		}
 
 		cmd[strlen(cmd) - 1] = '\0';
 
 		args = build_args(cmd);
-		free(args[0]);
+		//free(args[0]);
 		args[0] = build_cmd_path(cmd, getenv("PATH"));
 		child_pid = fork();
 		if (child_pid == 0)
@@ -156,8 +159,16 @@ int main(int ac __attribute__((unused)), char **av __attribute__((unused)), char
 		{
 			perror("execve process failed.");
 		}
-		free_buffers(cmd, args);
+		if (args != NULL)
+		{
+			while (args[i] != NULL)
+			{
+				free(args[i]);
+				i++;
+			}
+			free(args);
+		}
+
 	}
-	free_buffers(cmd, args);
 	return (0);
 }
