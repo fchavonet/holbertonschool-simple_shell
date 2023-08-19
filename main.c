@@ -109,12 +109,19 @@ int main(int ac __attribute__((unused)), char **av __attribute__((unused)), char
 
 	while (1)
 	{
-		printf("$ ");
+		if (isatty(STDIN_FILENO))
+		{
+			printf("$ ");
+			fflush(stdout);
+		}
 		getline_result = getline(&cmd, &max_cmd_length, stdin);
 		if (getline_result == EOF)
 		{
 			free(cmd);
-			printf("\n");
+			if (isatty(STDIN_FILENO))
+			{
+				printf("\n");
+			}
 			exit(EXIT_SUCCESS);
 		}
 
