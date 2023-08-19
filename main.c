@@ -99,8 +99,6 @@ char *build_cmd_path(char *cmd, char *path)
  */
 int main(int ac __attribute__((unused)), char **av __attribute__((unused)), char **env)
 {
-
-	int i = 0;
 	size_t max_cmd_length = 4096;
 	/* atoi(getenv("ARG_MAX")) */
 	ssize_t getline_result = 0;
@@ -127,7 +125,16 @@ int main(int ac __attribute__((unused)), char **av __attribute__((unused)), char
 		}
 		cmd[strlen(cmd) - 1] = '\0';
 		args = build_args(cmd);
-		args[0] = build_cmd_path(cmd, getenv("PATH"));
+
+		if (access(args[0], X_OK) != 0)
+		{
+			args[0] = build_cmd_path(cmd, getenv("PATH"));
+		}
+		else
+		{
+			args[0] = strdup(args[0]);
+		}
+
 		child_pid = fork();
 		if (child_pid == 0)
 		{
