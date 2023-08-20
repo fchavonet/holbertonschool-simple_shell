@@ -13,23 +13,21 @@ char **build_args(char *cmd)
 	char *token;
 	char **args = NULL;
 
+	while (*cmd == ' ' || *cmd == '\t')
+		cmd++;
 	while (cmd[i] != '\0')
 	{
 		if (cmd[i] == ' ')
-		{
 			count++;
-		}
 		i++;
 	}
-
-	/* ne pas oublier d'ajouter 1 au count pour le malloc si on ajoute --color=auto */
+	/* ne pas oublier d'ajouter 1 au count si on ajoute --color=auto */
 	args = malloc(sizeof(char *) * (count + 2));
 	if (args == NULL)
 	{
 		perror("Memory allocation failed");
 		exit(EXIT_FAILURE);
 	}
-
 	if (count > 0)
 	{
 		token = strtok(cmd, " ");
@@ -104,7 +102,7 @@ void print_env(char **env)
 {
 	unsigned int i = 0;
 
-	for (i = 0; env[i] != NULL ; i++)
+	for (i = 0; env[i] != NULL; i++)
 	{
 		printf("%s\n", env[i]);
 	}
@@ -125,7 +123,7 @@ char *get_current_directory(void)
 
 	if (current_directory)
 	{
-		return(current_directory);
+		return (current_directory);
 	}
 
 	return (current_path);
@@ -165,16 +163,9 @@ int main(int ac __attribute__((unused)), char **av __attribute__((unused)), char
 			}
 			exit(EXIT_SUCCESS);
 		}
-		
-		if (strcmp(cmd, "exit\n") == 0)
-                {
-                        free(cmd);
-                        exit(EXIT_SUCCESS);
-                }
 
 		cmd[strlen(cmd) - 1] = '\0';
-                args = build_args(cmd);
-
+		args = build_args(cmd);
 		/* AJOUT DE CODE */
 		if (strcmp(args[0], "env") == 0)
 		{
@@ -183,10 +174,16 @@ int main(int ac __attribute__((unused)), char **av __attribute__((unused)), char
 			continue; /* pour sauter le cycle fork-exec-wait pour env */
 		}
 		/* FIN AJOUT DE CODE */
+		if (strcmp(args[0], "exit") == 0)
+		{
+			free(args);
+			free(cmd);
+			exit(EXIT_SUCCESS);
+		}
 
 		if (access(args[0], X_OK) != 0)
 		{
-			args[0] = build_cmd_path(cmd, getenv("PATH"));
+			args[0] = build_cmd_path(args[0], getenv("PATH"));
 		}
 		else
 		{
