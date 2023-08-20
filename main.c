@@ -92,6 +92,29 @@ char *build_cmd_path(char *cmd, char *path)
 	return (NULL);
 }
 
+/* NEW CODE ADDED */
+
+/** get_curent_directory - Function to retrieve the current directory.
+ *
+ * Return : a pointer to the current directory name,
+ *          or the path (~/) if user is in the /root.
+ */
+char *get_current_directory(void)
+{
+	static char current_path[4096];
+	char *current_directory = NULL;
+
+	getcwd(current_path, sizeof(current_path));
+	current_directory = strrchr(current_path, '/');
+
+	if (current_directory)
+	{
+		return(current_directory);
+	}
+
+	return (current_path);
+}
+
 /**
  * main - temporary, for testing purposes
  *
@@ -107,11 +130,13 @@ int main(int ac __attribute__((unused)), char **av __attribute__((unused)), char
 	char **args = NULL;
 	char *cmd = NULL;
 
+	char *current_directory = get_current_directory();
+
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
 		{
-			printf("$ ");
+			printf("\033[36m~%s\033[0m $ ", current_directory);
 			fflush(stdout);
 		}
 		getline_result = getline(&cmd, &max_cmd_length, stdin);
