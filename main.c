@@ -94,6 +94,22 @@ char *build_cmd_path(char *cmd, char *path)
 
 /* NEW CODE ADDED */
 
+/**
+ * print_env - Print the environment variables.
+ *
+ * @env: array os strings containing environment variables.
+ *
+ */
+void print_env(char **env)
+{
+	unsigned int i = 0;
+
+	for (i = 0; env[i] != NULL ; i++)
+	{
+		printf("%s\n", env[i]);
+	}
+}
+
 /** get_curent_directory - Function to retrieve the current directory.
  *
  * Return : a pointer to the current directory name,
@@ -149,14 +165,24 @@ int main(int ac __attribute__((unused)), char **av __attribute__((unused)), char
 			}
 			exit(EXIT_SUCCESS);
 		}
-
+		
 		if (strcmp(cmd, "exit\n") == 0)
-		{
-			free(cmd);
-			exit(EXIT_SUCCESS);
-		}
+                {
+                        free(cmd);
+                        exit(EXIT_SUCCESS);
+                }
+
 		cmd[strlen(cmd) - 1] = '\0';
-		args = build_args(cmd);
+                args = build_args(cmd);
+
+		/* AJOUT DE CODE */
+		if (strcmp(args[0], "env") == 0)
+		{
+			print_env(env);
+			free(args);
+			continue; /* pour sauter le cycle fork-exec-wait pour env */
+		}
+		/* FIN AJOUT DE CODE */
 
 		if (access(args[0], X_OK) != 0)
 		{
