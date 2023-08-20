@@ -90,7 +90,34 @@ char *build_cmd_path(char *cmd, char *path)
 	return (NULL);
 }
 
-/* NEW CODE ADDED */
+
+/**
+ * _getenv - Get the value of an environment variable.
+ *
+ * @variable_name: the name of the environment variable to get.
+ *
+ * Return: if a match is found, a pointer to the environment variable,
+ *         NULL if there no match.
+ */
+char *_getenv(const char *variable_name)
+{
+	unsigned int i = 0;
+	size_t variable_name_length = strlen(variable_name);
+
+	if (variable_name == NULL)
+	{
+		return (NULL);
+	}
+
+	for (i = 0 ; environ[i] != NULL; i++)
+	{
+		if (strncmp(environ[i], variable_name, variable_name_length) == 0)
+		{
+			return (environ[i] + variable_name_length + 1);
+		}
+	}
+	return (NULL);
+}
 
 /**
  * print_env - Print the environment variables.
@@ -98,17 +125,18 @@ char *build_cmd_path(char *cmd, char *path)
  * @env: array os strings containing environment variables.
  *
  */
-void print_env(char **env)
+void print_env(char **environ)
 {
 	unsigned int i = 0;
 
-	for (i = 0; env[i] != NULL; i++)
+	for (i = 0; environ[i] != NULL; i++)
 	{
-		printf("%s\n", env[i]);
+		printf("%s\n", environ[i]);
 	}
 }
 
-/** get_curent_directory - Function to retrieve the current directory.
+/**
+ * get_curent_directory - Function to retrieve the current directory.
  *
  * Return : a pointer to the current directory name,
  *          or the path (~/) if user is in the /root.
@@ -134,7 +162,7 @@ char *get_current_directory(void)
  *
  * Return: 0
  */
-int main(int ac __attribute__((unused)), char **av __attribute__((unused)), char **env)
+int main(void)
 {
 	size_t max_cmd_length = 4096;
 	/* atoi(getenv("ARG_MAX")) */
@@ -166,14 +194,12 @@ int main(int ac __attribute__((unused)), char **av __attribute__((unused)), char
 
 		cmd[strlen(cmd) - 1] = '\0';
 		args = build_args(cmd);
-		/* AJOUT DE CODE */
 		if (strcmp(args[0], "env") == 0)
 		{
-			print_env(env);
+			print_env(environ);
 			free(args);
 			continue; /* pour sauter le cycle fork-exec-wait pour env */
 		}
-		/* FIN AJOUT DE CODE */
 		if (strcmp(args[0], "exit") == 0)
 		{
 			free(args);
@@ -183,7 +209,7 @@ int main(int ac __attribute__((unused)), char **av __attribute__((unused)), char
 
 		if (access(args[0], X_OK) != 0)
 		{
-			args[0] = build_cmd_path(args[0], getenv("PATH"));
+			args[0] = build_cmd_path(args[0], _getenv("PATH"));
 		}
 		else
 		{
@@ -193,7 +219,7 @@ int main(int ac __attribute__((unused)), char **av __attribute__((unused)), char
 		child_pid = fork();
 		if (child_pid == 0)
 		{
-			execve(args[0], args, env);
+			execve(args[0], args, environ);
 			exit(1);
 		}
 		else if (child_pid > 0)
