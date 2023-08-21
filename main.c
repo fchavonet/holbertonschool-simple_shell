@@ -131,6 +131,25 @@ void print_env(char **environ)
 	}
 }
 
+/** get_username - Function to retrieve the username
+ *
+ * Return: a pointer to the username,
+ *         or root if their is no no username.
+ */
+char *get_username(void)
+{
+	char *username = NULL;
+
+	username = _getenv("USER");
+	
+	if (username == NULL)
+	{
+		username = "root";
+	}
+
+	return(username);
+}
+
 /**
  * get_curent_directory - Function to retrieve the current directory.
  *
@@ -201,13 +220,15 @@ int main(void)
 	ssize_t getline_result = 0;
 	char **args = NULL;
 	char *cmd = NULL;
+
 	char *current_directory = get_current_directory();
+	char *username = get_username();
 
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
 		{
-			printf("\033[36m~%s\033[0m $ ", current_directory);
+			printf("\033[32m@%s\033[0m:\033[36m%s\033[0m $ ", username, current_directory);
 			fflush(stdout);
 		}
 		getline_result = getline(&cmd, &max_cmd_length, stdin);
