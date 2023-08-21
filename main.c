@@ -13,8 +13,6 @@ char **build_args(char *cmd)
 	char *token;
 	char **args = NULL;
 
-	while (*cmd == ' ' || *cmd == '\t')
-		cmd++;
 	while (cmd[i] != '\0')
 	{
 		if (cmd[i] == ' ')
@@ -141,13 +139,13 @@ char *get_username(void)
 	char *username = NULL;
 
 	username = _getenv("USER");
-	
+
 	if (username == NULL)
 	{
 		username = "root";
 	}
 
-	return(username);
+	return (username);
 }
 
 /**
@@ -182,7 +180,6 @@ char *get_current_directory(void)
  */
 int _exec(char **args)
 {
-	char error_msg[100];
 	pid_t child_pid = 0;
 	int status = 0;
 	int return_value = 0;
@@ -191,10 +188,9 @@ int _exec(char **args)
 	if (child_pid == 0)
 	{
 		return_value = execve(args[0], args, environ);
-		sprintf(error_msg, "./hsh: %d: %s", errno, args[0]);
-		if (return_value != 0)
+		if (return_value == -1)
 		{
-			perror(error_msg);
+			fprintf(stderr, "./hsh: No such file or directory\n");
 		}
 		exit(EXIT_SUCCESS);
 	}
@@ -219,6 +215,7 @@ int main(void)
 	size_t max_cmd_length = 4096;
 	ssize_t getline_result = 0;
 	char **args = NULL;
+	char *user_input = NULL;
 	char *cmd = NULL;
 
 	char *current_directory = get_current_directory();
@@ -231,15 +228,24 @@ int main(void)
 			printf("\033[32m@%s\033[0m:\033[36m%s\033[0m $ ", username, current_directory);
 			fflush(stdout);
 		}
-		getline_result = getline(&cmd, &max_cmd_length, stdin);
+		getline_result = getline(&user_input, &max_cmd_length, stdin);
 		if (getline_result == EOF)
 		{
-			free(cmd);
+			free(user_input);
 			if (isatty(STDIN_FILENO))
 			{
 				printf("\n");
 			}
 			exit(EXIT_SUCCESS);
+		}
+		cmd = user_input;
+		while (*cmd == ' ' || *cmd == '\t')
+		{
+			cmd++;
+		}
+		if (strcmp(cmd, "\n") == 0)
+		{
+			continue;
 		}
 		cmd[strlen(cmd) - 1] = '\0';
 		args = build_args(cmd);
@@ -247,12 +253,12 @@ int main(void)
 		{
 			print_env(environ);
 			free(args);
-			continue; /* pour sauter le cycle fork-exec-wait pour env */
+			continue;
 		}
 		if (strcmp(args[0], "exit") == 0)
 		{
 			free(args);
-			free(cmd);
+			free(user_input);
 			exit(EXIT_SUCCESS);
 		}
 		if (access(args[0], X_OK) != 0)
