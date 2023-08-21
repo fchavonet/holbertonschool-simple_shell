@@ -57,14 +57,12 @@ char **build_args(char *cmd)
  */
 char *build_cmd_path(char *cmd, char *path)
 {
-
 	char *path_copy = NULL;
 	char *token = NULL;
 	char *path_dirs = NULL;
 	char *built_path = NULL;
 
 	path_copy = strdup(path);
-
 	token = strtok(path_copy, ":");
 	while (token != NULL)
 	{
@@ -86,10 +84,8 @@ char *build_cmd_path(char *cmd, char *path)
 		free(built_path);
 		token = strtok(NULL, ":");
 	}
-	free(path_copy);
-	return (NULL);
+	return (path_copy);
 }
-
 
 /**
  * _getenv - Get the value of an environment variable.
@@ -109,7 +105,7 @@ char *_getenv(const char *variable_name)
 		return (NULL);
 	}
 
-	for (i = 0 ; environ[i] != NULL; i++)
+	for (i = 0; environ[i] != NULL; i++)
 	{
 		if (strncmp(environ[i], variable_name, variable_name_length) == 0)
 		{
@@ -158,6 +154,43 @@ char *get_current_directory(void)
 }
 
 /**
+ * _exec - executes a command given arguments and env and handles errors
+ * @cmd: args[0], the command
+ * @args: the arguments for the command
+ * @env: the array of string for environment variables
+ *
+ * Return: TODO
+ */
+int _exec(char **args)
+{
+	char error_msg[100];
+	pid_t child_pid = 0;
+	int status = 0;
+	int return_value = 0;
+
+	child_pid = fork();
+	if (child_pid == 0)
+	{
+		return_value = execve(args[0], args, environ);
+		sprintf(error_msg, "./hsh: %d: %s", errno, args[0]);
+		if (return_value != 0)
+		{
+			perror(error_msg);
+		}
+		exit(EXIT_SUCCESS);
+	}
+	else if (child_pid > 0)
+	{
+		wait(&status);
+	}
+	else
+	{
+		perror("execve process failed.");
+	}
+	return (return_value);
+}
+
+/**
  * main - temporary, for testing purposes
  *
  * Return: 0
@@ -165,13 +198,9 @@ char *get_current_directory(void)
 int main(void)
 {
 	size_t max_cmd_length = 4096;
-	/* atoi(getenv("ARG_MAX")) */
 	ssize_t getline_result = 0;
-	pid_t child_pid = 0;
-	int status = 0;
 	char **args = NULL;
 	char *cmd = NULL;
-
 	char *current_directory = get_current_directory();
 
 	while (1)
@@ -191,7 +220,6 @@ int main(void)
 			}
 			exit(EXIT_SUCCESS);
 		}
-
 		cmd[strlen(cmd) - 1] = '\0';
 		args = build_args(cmd);
 		if (strcmp(args[0], "env") == 0)
@@ -206,7 +234,6 @@ int main(void)
 			free(cmd);
 			exit(EXIT_SUCCESS);
 		}
-
 		if (access(args[0], X_OK) != 0)
 		{
 			args[0] = build_cmd_path(args[0], _getenv("PATH"));
@@ -215,21 +242,7 @@ int main(void)
 		{
 			args[0] = strdup(args[0]);
 		}
-
-		child_pid = fork();
-		if (child_pid == 0)
-		{
-			execve(args[0], args, environ);
-			exit(1);
-		}
-		else if (child_pid > 0)
-		{
-			wait(&status);
-		}
-		else
-		{
-			perror("execve process failed.");
-		}
+		_exec(args);
 		free(args[0]);
 		free(args);
 	}
