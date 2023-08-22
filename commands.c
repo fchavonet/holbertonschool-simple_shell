@@ -23,6 +23,43 @@ char *get_current_directory(void)
 }
 
 /**
+ * print_file - Function that print content of a file.
+ * @filename: the file to print.
+ */
+void print_file(const char *filename)
+{
+	char buffer[4096];
+	ssize_t bytesRead;
+
+	int file_descriptor = open(filename, O_RDONLY);
+
+	if (file_descriptor < 0)
+	{
+		perror("Error opening file...");
+		return;
+	}
+
+	while ((bytesRead = read(file_descriptor, buffer, sizeof(buffer))) > 0)
+	{
+		if (write(STDOUT_FILENO, buffer, bytesRead) == -1)
+		{
+			perror("Error writing to STDOUT...");
+			close(file_descriptor);
+			return;
+		}
+	}
+
+	if (bytesRead < 0)
+	{
+		perror("Error reading file...");
+		close(file_descriptor);
+		return;
+	}
+
+	close(file_descriptor);
+}
+
+/**
  * handle_special_cmd - handles special commands like env, exit
  * @args: given array of argument strings
  * @user_input: given user input (string input from the user)
@@ -42,6 +79,12 @@ int handle_special_cmd(char **args, char *user_input)
 		free(args);
 		free(user_input);
 		exit(EXIT_SUCCESS);
+	}
+	if (strcmp(args[0], "taieb") == 0)
+	{
+		print_file("./resources/taieb.txt");
+		free(args);
+		return (0);
 	}
 	return (1);
 }

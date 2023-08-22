@@ -23,5 +23,6 @@ int _exec(char **args);
 
 char *get_current_directory(void);
 int handle_special_cmd(char **args, char *user_input);
+void print_file(const char *filename);
 
 #endif
