@@ -12,4 +12,16 @@
 
 extern char **environ;
 
+char **build_args(char *cmd);
+char *build_cmd_path(char *cmd, char *path);
+
+char *_getenv(const char *variable_name);
+char *get_username(void);
+void print_env(char **environ);
+
+int _exec(char **args);
+
+char *get_current_directory(void);
+int handle_special_cmd(char **args, char *user_input);
+
 #endif
