@@ -19,17 +19,23 @@ int _exec(char **args)
 		if (ret_value == -1)
 		{
 			fprintf(stderr, "./hsh: No such file or directory\n");
+			exit(2);
 		}
 		exit(EXIT_SUCCESS);
 	}
 	else if (child_pid > 0)
 	{
 		wait(&status);
+		if (WIFEXITED(status))
+		{
+			status = WEXITSTATUS(status);
+		}
 	}
 	else
 	{
-		perror("execve process failed.");
+		perror("fork process failed.");
+		return (status);
 	}
 
-	return (ret_value);
+	return (status);
 }

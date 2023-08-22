@@ -63,10 +63,11 @@ void print_file(const char *filename)
  * handle_special_cmd - handles special commands like env, exit
  * @args: given array of argument strings
  * @user_input: given user input (string input from the user)
+ * @status: child process status value
  *
  * Return: 0 to continue in main
  */
-int handle_special_cmd(char **args, char *user_input)
+int handle_special_cmd(char **args, char *user_input, int status)
 {
 	if (strcmp(args[0], "env") == 0)
 	{
@@ -74,12 +75,17 @@ int handle_special_cmd(char **args, char *user_input)
 		free(args);
 		return (0);
 	}
-	if (strcmp(args[0], "exit") == 0)
+	if (strcmp(args[0], "exit") == 0 && args[1] == NULL)
 	{
 		free(args);
 		free(user_input);
-		exit(EXIT_SUCCESS);
+		exit(status);
 	}
+	else if (strcmp(args[0], "exit") == 0 && args[1] != NULL)
+	{
+		return (0);
+	}
+
 	if (strcmp(args[0], "taieb") == 0)
 	{
 		print_file("./resources/taieb.txt");
