@@ -329,7 +329,7 @@ You can also run commands that require arguments, such as:
 
 Execution: `man_1_simple_shell`
 
-![Image]()
+![Image](https://raw.githubusercontent.com/Pandolowitz/holbertonschool-simple_shell/master/resources/man_page.png)
 
 ## :hearts: <span id="thanks">Thanks</span>
 
