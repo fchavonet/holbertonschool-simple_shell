@@ -69,7 +69,7 @@ int main(void)
 
 		if (access(args[0], X_OK) != 0)
 		{
-			fprintf(stderr, "./hsh: %s: command not found\n", strtok(cmd, " "));
+			fprintf(stderr, "./hsh: 1: %s: not found\n", strtok(cmd, " "));
 			status = 127;
 		}
 		else
