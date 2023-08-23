@@ -29,10 +29,10 @@ The shell supports standard shell commands, as well as some special commands for
 - \fBargs.c\fP: contains the arguments and path management.
 .br
 .br
-- \fBcommands.c\fP: contains functions to handles special commands like env, exit...
+- \fBcommands.c\fP: contains functions to handle special commands like env, exit...
 .br
 .br
-- \fBexec.c\fP: contains function to execute commands.
+- \fBexec.c\fP: contains a function to execute commands.
 
 .SH REQUIREMENTS
 - \fBgit\fP (\fIhttps://git-scm.com/\fR) version 2.33.0 or newer to clone the repository.
@@ -51,6 +51,13 @@ To install and run Simple Shell, follow these steps:
     \(dqgcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh\(dq
 
 3. Run the program with the command in \fBSYNOPSIS\fP.
+
+.SH PROMPT
+[@$USER:$PWD $ ]
+    - $USER is the environment value of the variable USER. If USER isn't defined, $USER will be \(dqroot\(dq.
+    - $PWD is the full path of the current working directory.
+.br
+Example : [@Batman:/home/batcave $ ]
 
 .SH EXAMPLES
 - \fBls\fP: list the contents of the current directory.
@@ -76,20 +83,20 @@ To install and run Simple Shell, follow these steps:
 .SH NOTES
 The \fBSimple Shell\fP is a streamlined rendition of the standard Bash shell.
 .br
-While it proficiently manages numerous functions, it may not address specific errors and lacks full compatibility with all functionalities present in the standard Bash shell.
+While it successfully manages numerous functions, it may not address specific errors and lacks full compatibility with all functionalities present in the standard Bash shell.
 .br
 It predominantly focuses on the fundamental utilization of the aforementioned features.
 
 .SH AUTHORS
-Written by \fBFabien CHAVONET\fP and \fBPierre-Émmanuel SAINT-MÉZARD\fP.
+Written by \fBFabien CHAVONET\fP and \fBPierre-Emmanuel SAINT-MÉZARD\fP.
 
 .SH REPORTING BUGS
 Please report any bugs or issues to \fIfabien.chavonet@holbertonstudents.com\fR or \fIpierre.lgsm@gmail.com\fR.
 
 .SH COPYRIGHT
 .nf
-Copyright (C) 2023, Fabien Chavonet and Pierre-Émmanuel SAINT-MÉZARD.
-This  is  free software: you are free to change and redistribute it.
+Copyright (C) 2023, Fabien Chavonet and Pierre-Emmanuel SAINT-MÉZARD.
+This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
 .si
 

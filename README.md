@@ -1,11 +1,12 @@
-# C - Simple Shell
-# <p align="center">C - Simple Shell</p>
 
 <p align="center">
 	<img src="https://apply.holbertonschool.com/holberton-logo.png">
 	<br>
 	<img src="https://readme-typing-svg.herokuapp.com?font=Open+Sans&weight=900&pause=1000&color=1D5ABD&center=true&vCenter=true&width=500&lines=LOW+LEVEL+PROGRAMMING+PROJECT+IN+C" alt="Typing SVG" />
 </p>
+
+#
+# <p align="center">C - Simple Shell</p>
 
 ## :bookmark: Table of contents
 <details>
@@ -70,7 +71,7 @@ src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Cod
 - `char *build_cmd_path(char *cmd, char *path);` : builds path of the executable from given command string.
 
 - `char *_getenv(const char *variable_name);` : get the value of an environment variable.
-- `char *get_username(void);` : retrieve the username associated with the environment. 
+- `char *get_username(void);` : retrieve the username associated with the environment.
 - `void print_env(char **environ);` : print the environment variables.
 
 - `int _exec(char **args);` : executes a command according to arguments and environment, and handles errors.
@@ -148,7 +149,7 @@ src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Cod
 <br>
 
 ```
-julien@ubuntu:~/shell$ ./shell 
+julien@ubuntu:~/shell$ ./shell
 #cisfun$ ls
 ./shell: No such file or directory
 #cisfun$ /bin/ls
@@ -201,7 +202,7 @@ env-environ.c  exec    fork    mypid   ppid   printenv  promptc  shell     shell
 :) ls
 barbie_j       env-main.c  exec.c  fork.c  pid.c  ppid.c    prompt   prompt.c  shell_0.3  stat    test_scripting.sh  wait.c
 env-environ.c  exec    fork    mypid   ppid   printenv  promptc  shell     shell.c    stat.c  wait
-:) ls -l /tmp 
+:) ls -l /tmp
 total 20
 -rw------- 1 julien julien    0 Dec  5 12:09 config-err-aAMZrR
 drwx------ 3 root   root   4096 Dec  5 12:09 systemd-private-062a0eca7f2a44349733e78cb4abdff4-colord.service-V7DUzr
@@ -209,7 +210,7 @@ drwx------ 3 root   root   4096 Dec  5 12:09 systemd-private-062a0eca7f2a4434973
 drwx------ 3 root   root   4096 Dec  5 12:07 systemd-private-062a0eca7f2a44349733e78cb4abdff4-systemd-timesyncd.service-CdXUtH
 -rw-rw-r-- 1 julien julien    0 Dec  5 12:09 unity_support_test.0
 :) ^C
-julien@ubuntu:~/shell$ 
+julien@ubuntu:~/shell$
 ```
 </details>
 
@@ -283,7 +284,7 @@ julien@ubuntu:~/shell$
 
 ## :computer: <span id="install">How to install run and use our Simple Shell</a>
 
-### Instal and run:
+### Install and run:
 
 To install and run Simple Shell, follow these steps:
 
