@@ -67,7 +67,7 @@ int main(void)
 		else
 			args[0] = strdup(args[0]);
 
-		if (access(args[0], X_OK) != 0)
+		if (access(args[0], X_OK) != 0 || _getenv("PATH=") == NULL)
 		{
 			fprintf(stderr, "./hsh: 1: %s: not found\n", strtok(cmd, " "));
 			status = 127;
