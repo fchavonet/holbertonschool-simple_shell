@@ -19,17 +19,18 @@ void check_terminal(char *user, char *pwd)
  * check_eof - checks input for EOF, frees memory and closes the shell on EOF
  * @user_input: user input to free if EOF was received
  * @getline_result: return value from getline, equal to EOF (-1) on EOF
+ * @status: exit value from the last command executed
  *
  * Return: nothing
  */
-void check_eof(char *user_input, ssize_t getline_result)
+void check_eof(char *user_input, ssize_t getline_result, int status)
 {
 	if (getline_result == EOF)
 	{
 		free(user_input);
 		if (isatty(STDIN_FILENO))
 			printf("\n");
-		exit(EXIT_SUCCESS);
+		exit(status);
 	}
 }
 
@@ -51,7 +52,7 @@ int main(void)
 	{
 		check_terminal(username, current_dir);
 		getline_result = getline(&user_input, &max_cmd_length, stdin);
-		check_eof(user_input, getline_result);
+		check_eof(user_input, getline_result, status);
 		cmd = user_input;
 		while (*cmd == ' ' || *cmd == '\t')
 			cmd++;
