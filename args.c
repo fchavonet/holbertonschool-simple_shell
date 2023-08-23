@@ -13,6 +13,7 @@ char **build_args(char *cmd)
 	char *token;
 	char **args = NULL;
 
+	/* move the \0 replacement here */
 	while (cmd[i] != '\0')
 	{
 		if (cmd[i] == ' ')

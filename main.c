@@ -1,6 +1,39 @@
 #include "main.h"
 
 /**
+ * check_terminal - prints a prompt if standard input is from a terminal
+ * @user: string value of USER variable in ENV, "root" if not defined
+ * @pwd: string path of current directory
+ *
+ * Return: nothing
+ */
+void check_terminal(char *user, char *pwd)
+{
+	if (isatty(STDIN_FILENO))
+	{
+		printf("\033[32m@%s\033[0m:\033[36m%s\033[0m $ ", user, pwd);
+		fflush(stdout);
+	}
+}
+/**
+ * check_eof - checks input for EOF, frees memory and closes the shell on EOF
+ * @user_input: user input to free if EOF was received
+ * @getline_result: return value from getline, equal to EOF (-1) on EOF
+ *
+ * Return: nothing
+ */
+void check_eof(char *user_input, ssize_t getline_result)
+{
+	if (getline_result == EOF)
+	{
+		free(user_input);
+		if (isatty(STDIN_FILENO))
+			printf("\n");
+		exit(EXIT_SUCCESS);
+	}
+}
+
+/**
  * main - temporary, for testing purposes
  *
  * Return: 0
@@ -16,19 +49,9 @@ int main(void)
 
 	while (1)
 	{
-		if (isatty(STDIN_FILENO))
-		{
-			printf("\033[32m@%s\033[0m:\033[36m%s\033[0m $ ", username, current_dir);
-			fflush(stdout);
-		}
+		check_terminal(username, current_dir);
 		getline_result = getline(&user_input, &max_cmd_length, stdin);
-		if (getline_result == EOF)
-		{
-			free(user_input);
-			if (isatty(STDIN_FILENO))
-				printf("\n");
-			exit(EXIT_SUCCESS);
-		}
+		check_eof(user_input, getline_result);
 		cmd = user_input;
 		while (*cmd == ' ' || *cmd == '\t')
 			cmd++;
