@@ -6,7 +6,7 @@
  *
  * Return: TODO
  */
-int _exec(char **args)
+int _exec(char **args, char *cmd)
 {
 	pid_t child_pid = 0;
 	int status = 0;
@@ -18,8 +18,8 @@ int _exec(char **args)
 		ret_value = execve(args[0], args, environ);
 		if (ret_value == -1)
 		{
-			fprintf(stderr, "./hsh: No such file or directory\n");
-			exit(2);
+			fprintf(stderr, "./hsh: 1: %s: not found\n", strtok(cmd, " "));
+			exit(127);
 		}
 		exit(EXIT_SUCCESS);
 	}

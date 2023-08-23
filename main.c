@@ -62,10 +62,10 @@ int main(void)
 		if (handle_special_cmd(args, user_input, status) == 0)
 			continue;
 		if (access(args[0], X_OK) != 0)
-			args[0] = build_cmd_path(args[0], _getenv("PATH"));
+			args[0] = build_cmd_path(args[0], _getenv("PATH="));
 		else
 			args[0] = strdup(args[0]);
-		status = _exec(args);
+		status = _exec(args, cmd);
 		free(args[0]);
 		free(args);
 	}

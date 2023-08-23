@@ -22,7 +22,7 @@ char *_getenv(const char *variable_name)
 	{
 		if (strncmp(environ[i], variable_name, variable_name_length) == 0)
 		{
-			return (environ[i] + variable_name_length + 1);
+			return (environ[i] + variable_name_length);
 		}
 	}
 	return (NULL);
@@ -38,7 +38,7 @@ char *get_username(void)
 {
 	char *username = NULL;
 
-	username = _getenv("USER");
+	username = _getenv("USER=");
 
 	if (username == NULL)
 	{

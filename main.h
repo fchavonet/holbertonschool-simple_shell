@@ -19,7 +19,7 @@ char *_getenv(const char *variable_name);
 char *get_username(void);
 void print_env(char **environ);
 
-int _exec(char **args);
+int _exec(char **args, char *cmd);
 
 char *get_current_directory(void);
 int handle_special_cmd(char **args, char *user_input, int status);
