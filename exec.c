@@ -3,8 +3,9 @@
 /**
  * _exec - executes a command given arguments and env and handles errors
  * @args: the arguments for the command
+ * @cmd: given command string
  *
- * Return: TODO
+ * Return: status
  */
 int _exec(char **args, char *cmd)
 {
