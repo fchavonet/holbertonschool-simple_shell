@@ -1,0 +1,97 @@
+.TH SIMPLE_SHELL 1 "2023, August" "version 1.0" "Simple Shell User Manual"
+
+.SH NAME
+\fbhsh\fp \- A simple UNIX command interpreter.
+
+.SH SYNOPSIS
+.B - ./hsh
+.br
+.B - echo \(dqyour_command\(dq | ./hsh
+
+.SH DESCRIPTION
+The \fBSimple Shell\fP is a basic interactive shell that allows users to execute commands and perform various operations.
+.br
+It provides a command prompt where users can enter commands for execution.
+.br
+The shell supports standard shell commands, as well as some special commands for environment information and file operations.
+.br
+
+.SH FILES
+- \fBmain.h\fP: includes libraries and function.
+.br
+.br
+- \fBmain.c\fP: contains the main function of the shell (entry point).
+.br
+.br
+- \fBenv.c\fP: contains environment management.
+.br
+.br
+- \fBargs.c\fP: contains the arguments and path management.
+.br
+.br
+- \fBcommands.c\fP: contains functions to handles special commands like env, exit...
+.br
+.br
+- \fBexec.c\fP: contains function to execute commands.
+
+.SH REQUIREMENTS
+- \fBgit\fP (\fIhttps://git-scm.com/\fR) version 2.33.0 or newer to clone the repository.
+.br
+- \fBGCC\fP (\fIhttps://gcc.gnu.org/\fR) version 9.4.0 or newer to compile.
+
+.SH INSTALLING
+To install and run Simple Shell, follow these steps:
+
+1. Clone the repository using the following command:
+.br
+    \(dqgit clone \fIhttps://github.com/Pandolowitz/holbertonschool-simple_shell.git\fR\(dq
+
+2. Compile the program by running the following command:
+.br
+    \(dqgcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh\(dq
+
+3. Run the program with the command in \fBSYNOPSIS\fP.
+
+.SH EXAMPLES
+- \fBls\fP: list the contents of the current directory.
+.br
+.br
+- \fBls -a -1 /tmp\fP: prints the contents of the /tmp directory, including hidden files, one per line.
+.br
+.br
+- \fBpwd\fP: print the path of the current working directory.
+.br
+.br
+- \fBecho \(dqyour_message\(dq\fP: display a message on the screen.
+.br
+.br
+- \fBmkdir \(dqyour_directory_name\(dq\fP: create a new directory.
+.br
+.br
+- \fBenv\fP: print the environment.
+.br
+.br
+- \fBexit\fP: exit the shell.
+
+.SH NOTES
+The \fBSimple Shell\fP is a streamlined rendition of the standard Bash shell.
+.br
+While it proficiently manages numerous functions, it may not address specific errors and lacks full compatibility with all functionalities present in the standard Bash shell.
+.br
+It predominantly focuses on the fundamental utilization of the aforementioned features.
+
+.SH AUTHORS
+Written by \fBFabien CHAVONET\fP and \fBPierre-Émmanuel SAINT-MÉZARD\fP.
+
+.SH REPORTING BUGS
+Please report any bugs or issues to \fIfabien.chavonet@holbertonstudents.com\fR or \fIpierre.lgsm@gmail.com\fR.
+
+.SH COPYRIGHT
+.nf
+Copyright (C) 2023, Fabien Chavonet and Pierre-Émmanuel SAINT-MÉZARD.
+This  is  free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+.si
+
+.SH SEE ALSO
+man bash
