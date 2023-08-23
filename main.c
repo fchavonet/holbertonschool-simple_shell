@@ -66,7 +66,16 @@ int main(void)
 			args[0] = build_cmd_path(args[0], _getenv("PATH="));
 		else
 			args[0] = strdup(args[0]);
-		status = _exec(args, cmd);
+
+		if (access(args[0], X_OK) != 0)
+		{
+			fprintf(stderr, "./hsh: %s: command not found\n", strtok(cmd, " "));
+			status = 127;
+		}
+		else
+		{
+			status = _exec(args, cmd);
+		}
 		free(args[0]);
 		free(args);
 	}

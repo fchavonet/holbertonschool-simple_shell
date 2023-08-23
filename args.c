@@ -83,5 +83,6 @@ char *build_cmd_path(char *cmd, char *path)
 		free(built_path);
 		token = strtok(NULL, ":");
 	}
-	return (path_copy);
+	free(path_copy);
+	return (strdup(cmd));
 }
