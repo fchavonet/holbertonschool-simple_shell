@@ -62,12 +62,11 @@ int main(void)
 		args = build_args(cmd);
 		if (handle_special_cmd(args, user_input, status) == 0)
 			continue;
-		if (access(args[0], X_OK) != 0)
-			args[0] = build_cmd_path(args[0], _getenv("PATH="));
-		else
+		if (access(args[0], X_OK) == 0)
 			args[0] = strdup(args[0]);
-
-		if (access(args[0], X_OK) != 0 || _getenv("PATH=") == NULL)
+		else
+			args[0] = build_cmd_path(args[0], _getenv("PATH="));
+		if (args[0] == NULL)
 		{
 			fprintf(stderr, "./hsh: 1: %s: not found\n", strtok(cmd, " "));
 			status = 127;
@@ -75,8 +74,8 @@ int main(void)
 		else
 		{
 			status = _exec(args, cmd);
+			free(args[0]);
 		}
-		free(args[0]);
 		free(args);
 	}
 	return (0);

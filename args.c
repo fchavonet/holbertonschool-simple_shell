@@ -61,6 +61,8 @@ char *build_cmd_path(char *cmd, char *path)
 	char *path_dirs = NULL;
 	char *built_path = NULL;
 
+	if (path == NULL)
+		return (NULL);
 	path_copy = strdup(path);
 	token = strtok(path_copy, ":");
 	while (token != NULL)
