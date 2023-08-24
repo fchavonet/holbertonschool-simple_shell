@@ -41,9 +41,9 @@ void check_eof(char *user_input, ssize_t getline_result, int status)
 void check_ctrlc(int signo)
 {
 	(void)signo;
-    printf("\n");
-    check_terminal(get_username(), get_current_directory());
-    fflush(stdout);
+	printf("\n");
+	check_terminal(get_username(), get_current_directory());
+	fflush(stdout);
 }
 
 /**
@@ -63,7 +63,6 @@ int main(void)
 	while (1)
 	{
 		signal(SIGINT, check_ctrlc);
-
 		check_terminal(username, current_dir);
 		getline_result = getline(&user_input, &max_cmd_length, stdin);
 		check_eof(user_input, getline_result, status);
@@ -76,7 +75,7 @@ int main(void)
 		args = build_args(cmd);
 		if (handle_special_cmd(args, user_input, status) == 0)
 			continue;
-		if (access(args[0], X_OK) == 0)
+		if (strchr(args[0], '/') != NULL)
 			args[0] = strdup(args[0]);
 		else
 			args[0] = build_cmd_path(args[0], _getenv("PATH="));
