@@ -1,10 +1,10 @@
 #include "main.h"
 
 /**
- * build_args - initialize an array of strings containing arguments
- * @cmd: given command string
+ * build_args - Initialize an array of strings containing arguments.
+ * @cmd: given command string.
  *
- * Return: pointer to created array of args
+ * Return: pointer to created array of args.
  */
 char **build_args(char *cmd)
 {
@@ -13,14 +13,12 @@ char **build_args(char *cmd)
 	char *token;
 	char **args = NULL;
 
-	/* move the \0 replacement here */
 	while (cmd[i] != '\0')
 	{
 		if (cmd[i] == ' ')
 			count++;
 		i++;
 	}
-	/* ne pas oublier d'ajouter 1 au count si on ajoute --color=auto */
 	args = malloc(sizeof(char *) * (count + 2));
 	if (args == NULL)
 	{
@@ -48,11 +46,11 @@ char **build_args(char *cmd)
 }
 
 /**
- * build_cmd_path - builds path of the executable from given command string
- * @cmd: given command string
- * @path: raw PATH string
+ * build_cmd_path - Builds path of the executable from given command string.
+ * @cmd: given command string.
+ * @path: raw PATH string.
  *
- * Return: built path string
+ * Return: built path string.
  */
 char *build_cmd_path(char *cmd, char *path)
 {

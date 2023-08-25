@@ -26,4 +26,6 @@ char *get_current_directory(void);
 int handle_special_cmd(char **args, char *user_input, int status, char **pwd);
 void print_file(const char *filename);
 
+int taieb_face(void);
+
 #endif

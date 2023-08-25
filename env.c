@@ -25,11 +25,12 @@ char *_getenv(const char *variable_name)
 			return (environ[i] + variable_name_length);
 		}
 	}
+	
 	return (NULL);
 }
 
 /**
- * get_username - Function to retrieve the username
+ * get_username - Function to retrieve the username.
  *
  * Return: a pointer to the username,
  *         or root if their is no username.

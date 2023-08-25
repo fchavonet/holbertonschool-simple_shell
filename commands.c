@@ -23,50 +23,13 @@ char *get_current_directory(void)
 }
 
 /**
- * print_file - Function that print content of a file.
- * @filename: the file to print.
- */
-void print_file(const char *filename)
-{
-	char buffer[4096];
-	ssize_t bytesRead;
-
-	int file_descriptor = open(filename, O_RDONLY);
-
-	if (file_descriptor < 0)
-	{
-		perror("Error opening file...");
-		return;
-	}
-
-	while ((bytesRead = read(file_descriptor, buffer, sizeof(buffer))) > 0)
-	{
-		if (write(STDOUT_FILENO, buffer, bytesRead) == -1)
-		{
-			perror("Error writing to STDOUT...");
-			close(file_descriptor);
-			return;
-		}
-	}
-
-	if (bytesRead < 0)
-	{
-		perror("Error reading file...");
-		close(file_descriptor);
-		return;
-	}
-
-	close(file_descriptor);
-}
-
-/**
- * handle_special_cmd - handles special commands like env, exit
- * @args: given array of argument strings
- * @user_input: given user input (string input from the user)
- * @status: child process status value
- * @pwd: current directory
+ * handle_special_cmd - Handles special commands like env, exit...
+ * @args: given array of argument strings.
+ * @user_input: given user input (string input from the user).
+ * @status: child process status value.
+ * @pwd: current directory.
  *
- * Return: 0 to continue in main
+ * Return: 0 to continue in main.
  */
 int handle_special_cmd(char **args, char *user_input, int status, char **pwd)
 {
@@ -89,7 +52,7 @@ int handle_special_cmd(char **args, char *user_input, int status, char **pwd)
 
 	if (strcmp(args[0], "taieb") == 0)
 	{
-		print_file("./resources/taieb.txt");
+		taieb_face();
 		free(args);
 		return (0);
 	}
