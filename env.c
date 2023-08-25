@@ -25,7 +25,6 @@ char *_getenv(const char *variable_name)
 			return (environ[i] + variable_name_length);
 		}
 	}
-	
 	return (NULL);
 }
 
