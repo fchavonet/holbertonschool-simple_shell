@@ -303,6 +303,24 @@ julien@ubuntu:~/shell$
 
 ### <span id="advanced-tasks">Advanced tasks</a>
 
+<details>
+	<summary>
+		<b>Task 14. cd</b>
+	</summary>
+	<ul>
+        <li>Simple shell 1.0 +</li>
+        <li>Implement the builtin command cd:</li<>>
+        <ul>
+            <li>Changes the current directory of the process.
+            <li>Command syntax: cd [DIRECTORY].</li>
+            <li>If no argument is given to cd the command must be interpreted like cd $HOME.</li>
+            <li>You have to handle the command cd -.</li>
+            <li>You have to update the environment variable PWD when you change directory.</li>
+        </ul>
+man chdir, man getcwd
+    </ul>
+</details>
+
 ## :bookmark_tabs: <span id="flowcharts">Flowcharts</a>
 
 ![Image](https://raw.githubusercontent.com/Pandolowitz/holbertonschool-simple_shell/master/resources/simple_shell_flowshart.png)
