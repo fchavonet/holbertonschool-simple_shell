@@ -89,7 +89,7 @@ src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Cod
 - The header files should be include guarded.
 - Your shell should not have any memory leaks.
 
-## :bookmark: List of allowed functions and system calls
+## :white_check_mark: List of allowed functions and system calls
 
 - `all` functions from string.h
 - `access` (man 2 access)
