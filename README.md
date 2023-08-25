@@ -305,13 +305,39 @@ julien@ubuntu:~/shell$
 
 <details>
 	<summary>
+		<b>Task 12. Simple shell 0.4.2</b>
+	</summary>
+	<ul>
+        <li>Simple shell 0.4 +</li>
+        <li>Handle Ctrl+C: your shell should not quit when the user inputs ^C</li>
+man 2 signal.
+    </ul>
+<br>
+
+```
+julien@ubuntu:~/shell$ ./shell_0.4.2
+$ ^C
+$ ^C
+$ ^C
+$ ls /var
+backups  cache  crash  lib  local  lock  log  mail  metrics  opt  run  snap  spool  tmp
+$ ^C
+$ ^C
+$ ^C
+$ exit
+julien@ubuntu:~/shell$ 
+```
+</details>
+
+<details>
+	<summary>
 		<b>Task 14. cd</b>
 	</summary>
 	<ul>
         <li>Simple shell 1.0 +</li>
-        <li>Implement the builtin command cd:</li<>>
+        <li>Implement the builtin command cd:</li>
         <ul>
-            <li>Changes the current directory of the process.
+            <li>Changes the current directory of the process.</li>
             <li>Command syntax: cd [DIRECTORY].</li>
             <li>If no argument is given to cd the command must be interpreted like cd $HOME.</li>
             <li>You have to handle the command cd -.</li>
