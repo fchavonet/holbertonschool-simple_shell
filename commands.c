@@ -64,10 +64,11 @@ void print_file(const char *filename)
  * @args: given array of argument strings
  * @user_input: given user input (string input from the user)
  * @status: child process status value
+ * @pwd: current directory
  *
  * Return: 0 to continue in main
  */
-int handle_special_cmd(char **args, char *user_input, int status)
+int handle_special_cmd(char **args, char *user_input, int status, char **pwd)
 {
 	if (strcmp(args[0], "env") == 0)
 	{
@@ -89,6 +90,21 @@ int handle_special_cmd(char **args, char *user_input, int status)
 	if (strcmp(args[0], "taieb") == 0)
 	{
 		print_file("./resources/taieb.txt");
+		free(args);
+		return (0);
+	}
+	if (strcmp(args[0], "cd") == 0)
+	{
+		if (args[1] == NULL)
+			chdir(_getenv("HOME="));
+		else if (strcmp(args[1], "..") == 0)
+			chdir("..");
+		else
+		{
+			if (chdir(args[1]) != 0)
+				perror("cd");
+		}
+		*pwd = get_current_directory();
 		free(args);
 		return (0);
 	}

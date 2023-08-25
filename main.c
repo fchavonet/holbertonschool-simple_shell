@@ -73,7 +73,7 @@ int main(void)
 			continue;
 		cmd[strlen(cmd) - 1] = '\0';
 		args = build_args(cmd);
-		if (handle_special_cmd(args, user_input, status) == 0)
+		if (handle_special_cmd(args, user_input, status, &current_dir) == 0)
 			continue;
 		if (strchr(args[0], '/') != NULL)
 			args[0] = strdup(args[0]);

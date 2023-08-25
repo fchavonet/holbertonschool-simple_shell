@@ -23,7 +23,7 @@ void print_env(char **environ);
 int _exec(char **args, char *cmd);
 
 char *get_current_directory(void);
-int handle_special_cmd(char **args, char *user_input, int status);
+int handle_special_cmd(char **args, char *user_input, int status, char **pwd);
 void print_file(const char *filename);
 
 #endif
