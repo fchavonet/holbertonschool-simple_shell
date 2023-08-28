@@ -53,14 +53,14 @@ The shell supports standard commands, as well as some special commands for envir
 ## :hammer: <span id="tech-stack">Tech stack</span>
 
 <div style="display: flex;">
+	<img width="45px" height="50px" src="https://upload.wikimedia.org/wikipedia/commons/1/19/C_Logo.png">
+    &emsp;
 	<img width="50px" height="50px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Logo-ubuntu_cof-orange-hex.svg/1200px-Logo-ubuntu_cof-orange-hex.svg.png">
-	 &emsp;
+	&emsp;
 	<img wigth="50px" height="50px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Vimlogo.svg/544px-Vimlogo.svg.png">
     &emsp;
     <img width="45px" height="50px"
 src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/2048px-Visual_Studio_Code_1.35_icon.svg.png">
-	 &emsp;
-	<img width="45px" height="50px" src="https://upload.wikimedia.org/wikipedia/commons/1/19/C_Logo.png">
 </div>
 
 ## :floppy_disk: <span id="prototype">Prototypes</span>
