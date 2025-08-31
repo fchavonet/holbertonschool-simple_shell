@@ -36,9 +36,6 @@ The shell supports both standard and special commands for environment management
 To successfully complete this project, we designed the flowchart shown below.
 
 <table>
-    <tr>
-        <th align="center">Flowchart</th>
-    </tr>
     <tr valign="top">
         <td align="center">
             <picture>
