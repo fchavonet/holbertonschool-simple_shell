@@ -432,7 +432,7 @@ gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 
 ## <span id="thanks">Thanks</span>
 
-A big thank you to all my Holberton School peers for their help and support throughout this project.
+- A big thank you to all my Holberton School peers for their help and support throughout this project.
 
 ## <span id="authors">Authors</span>
 
