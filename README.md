@@ -1,95 +1,87 @@
+<img height="50" align="right" src="https://raw.githubusercontent.com/fchavonet/fchavonet/refs/heads/main/assets/images/logo-holberton_school.webp" alt="Holberton School logo">
 
-<p align="center">
-	<img src="https://apply.holbertonschool.com/holberton-logo.png">
-	<br>
-	<img src="https://readme-typing-svg.herokuapp.com?font=Open+Sans&weight=900&pause=1000&color=1D5ABD&center=true&vCenter=true&width=500&lines=LOW+LEVEL+PROGRAMMING+PROJECT+IN+C" alt="Typing SVG" />
-</p>
+# Simple Shell
 
-#
-# <p align="center">C - Simple Shell</p>
+## Table of contents
 
-## :bookmark: Table of contents
 <details>
-        <summary>
-		CLICK TO ENLARGE :innocent:
-        </summary>
-        :memo: <a href="#objective">Objective</a>
-        <br>
-	    :page_facing_up: <a href="#description">Description</a>
-        <br>
-        :hammer: <a href="#tech-stack">Tech stack</a>
-        <br>
-        :floppy_disk: <a href="#prototype">Prototypes</a>
-        <br>
-        :clipboard: <a href="#requirements">Requirements</a>
-        <br>
-        :floppy_disk: <a href="#compilation-command">Compilation command</a>
-        <br>
-        :mortar_board: <a href="#instructions">Instructions</a>
-        <br>
-        :bookmark_tabs: <a href="#flowcharts">Flowcharts</a>
-        <br>
-        :open_file_folder: <a href="#files-description">Files description</a>
-        <br>
-        :computer: <a href="#install_run_use">How to install and run our Simple Shell</a>
-        <br>
-        :blue_book: <a href="#man-page">MAN page</a>
-        <br>
-        :heartpulse: <a href="#thanks">Thanks</a>
-        <br>
-        :construction_worker: <a href="#authors">Authors</a>
+    <summary>
+        CLICK TO ENLARGE 😇
+    </summary>
+    <a href="#description">Description</a>
+    <br>
+    <a href="#objectives">Objectives</a>
+    <br>
+    <a href="#requirements">Requirements</a>
+    <br>
+    <a href="#instructions">Instructions</a>
+    <br>
+    <a href="#tech-stack">Tech stack</a>
+    <br>
+    <a href="#files-description">Files description</a>
+    <br>
+    <a href="#installation_and_how_to_use">Installation and how to use</a>
+    <br>
+    <a href="#thanks">Thanks</a>
+    <br>
+    <a href="#authors">Authors</a>
 </details>
 
-## :memo: <span id="objective">Objective</span>
-To write a simple UNIX command interpreter.
+## <span id="description">Description</span>
 
-## :page_facing_up: <span id="description">Description</span>
+The Simple Shell is a basic UNIX command interpreter.  
+It provides a prompt where users can type commands, execute programs, and interact with the system.  
+The shell supports both standard and special commands for environment management and file operations.
 
-The Simple Shell  is a basic interactive shell that allows users to execute commands and perform various operations.
-It provides a command prompt where users can enter commands for execution.
-<br><br>
-The shell supports standard commands, as well as some special commands for environment information and file operations.
+To successfully complete this project, we designed the flowchart shown below.
 
-## :hammer: <span id="tech-stack">Tech stack</span>
+<table>
+    <tr>
+        <th align="center">Flowchart</th>
+    </tr>
+    <tr valign="top">
+        <td align="center">
+            <picture>
+                <source media="(prefers-color-scheme: dark)" srcset="./assets/images/simple_shell_flowchart-dark.webp">
+                <source media="(prefers-color-scheme: light)" srcset="./assets/images/simple_shell_flowchart-light.webp">
+                <img width="100%" src="./assets/images/simple_shell_flowchart.webp" alt="Simple Shell Flowchart">
+            </picture>
+        </td>
+    </tr>
+</table>
 
-<div style="display: flex;">
-	<img width="45px" height="50px" src="https://upload.wikimedia.org/wikipedia/commons/1/19/C_Logo.png">
-    &emsp;
-	<img width="50px" height="50px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Logo-ubuntu_cof-orange-hex.svg/1200px-Logo-ubuntu_cof-orange-hex.svg.png">
-	&emsp;
-	<img wigth="50px" height="50px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Vimlogo.svg/544px-Vimlogo.svg.png">
-    &emsp;
-    <img width="45px" height="50px"
-src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/2048px-Visual_Studio_Code_1.35_icon.svg.png">
-</div>
+## <span id="objectives">Objectives</span>
 
-## :floppy_disk: <span id="prototype">Prototypes</span>
+At the end of this project, I should be able to explain to anyone, **without the help of Google**:
 
-- `int main(void);` : main function of the Simple Shell (entry point).
+- Who designed and implemented the original Unix operating system?
+- Who wrote the first version of the UNIX shell?
+- Who invented the B programming language (the direct predecessor to the C programming language)?
+- Who is Ken Thompson?
+- How does a shell work?
+- What is a `pid` and a `ppid`?
+- How to manipulate the environment of the current process?
+- What is the difference between a function and a system call?
+- How to create processes?
+- What are the three prototypes of `main`?
+- How does the shell use the `PATH` to find the programs?
+- How to execute another program with the `execve` system call?
+- How to suspend the execution of a process until one of its children terminates?
+- What is `EOF` (end-of-file)?
 
-- `char **build_args(char *cmd);` : initialize an array of strings containing command arguments.
-- `char *build_cmd_path(char *cmd, char *path);` : builds path of the executable from given command string.
+## <span id="requirements">Requirements</span>
 
-- `char *_getenv(const char *variable_name);` : get the value of an environment variable.
-- `char *get_username(void);` : retrieve the username associated with the environment.
-- `void print_env(char **environ);` : print the environment variables.
-
-- `int _exec(char **args);` : executes a command according to arguments and environment, and handles errors.
-
-- `char *get_current_directory(void);` : retrieve the current directory.
-- `void print_file(const char *filename);` : print content of a file.
-- `int handle_special_cmd(char **args, char *user_input);` : handles special commands like `env`, `exit`...
-
-## :clipboard: <span id="requirements">Requirements</span>
-- Allowed editors: **vim**, **emacs** or Visual Code Studio.
-- All the files will be compiled on **Ubuntu 20.04 LTS** using **gcc**.
-- The code should use the **betty style**.
-- Global variables are not allowed.
+- My programs and functions will be compiled with `gcc` using the flags `-Wall`, `-Werror`, `-Wextra`, `-pedantic` and `-std=gnu89`.
+- All my files should end with a new line.
+- My code should use the Betty style. It will be checked using [betty-style.pl](https://github.com/hs-hq/Betty/blob/main/betty-style.pl) and [betty-doc.pl](https://github.com/hs-hq/Betty/blob/main/betty-doc.pl).
+- The shell should not have any memory leaks.
 - No more than 5 functions per file.
-- The header files should be include guarded.
-- Your shell should not have any memory leaks.
+- All my header files should be include guarded.
 
-## :white_check_mark: List of allowed functions and system calls
+<details>
+    <summary>
+        List of allowed functions and system calls.
+    </summary>
 
 - `all` functions from string.h
 - `access` (man 2 access)
@@ -129,67 +121,75 @@ src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Cod
 - `wait4` (man 2 wait4)
 - `write` (man 2 write)
 
-## :floppy_disk: <span id="compilation-command">Compilation command</a>
-`gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh`
+</details>
 
-## :mortar_board: <span id="instructions">Instructions</span>
+## <span id="instructions">Instructions</span>
 
-### <span id="mandatory-tasks">Mandatory tasks</span>
+### Mandatory
 
 <details>
-	<summary>
-		<b>Task 0. README, man, AUTHORS</b>
-	</summary>
-    <ul>
-        <li>Write a README.</li>
-        <li>Write a man for your shell.</li>
-        <li>You should have an AUTHORS file at the root of your repository, listing all individuals having contributed content to the repository.</li>
-    <ul>
+    <summary>
+        <b>0. README, man, AUTHORS</b>
+    </summary>
+    <br>
+
+- Write a `README`.
+- Write a `man` for your shell.
+- You should have an `AUTHORS` file at the root of your repository, listing all individuals having contributed content to the repository. Format, see [Docker](https://github.com/moby/moby/blob/master/AUTHORS).
+
+#
+**Repo:**
+- GitHub repository: `holbertonschool-simple_shell`.
+- File: `README.md`, `man_1_simple_shell`, `AUTHORS`.
+<hr>
 </details>
 
 <details>
-	<summary>
-		<b>Task 1. Betty would be proud</b>
-	</summary>
-	<ul>
-        <li>Write a beautiful code that passes the Betty checks.</li>
-    </ul>
+    <summary>
+        <b>1. Betty would be proud</b>
+    </summary>
+    <br>
+
+Write a beautiful code that passes the Betty checks.
+
+#
+**Repo:**
+- GitHub repository: `holbertonschool-simple_shell`.
+<hr>
 </details>
 
 <details>
-	<summary>
-		<b>Task 2. Simple shell 0.1</b>
-	</summary>
-	<ul>
-        <li>Write a UNIX command line interpreter.</li>
-        <ul>
-            <li>Usage: simple_shell</li>
-            <li>Your Shell should:</li>
-            <ul>
-                <li>Display a prompt and wait for the user to type a command. A command line always ends with a new line.</li>
-                <li>The prompt is displayed again each time a command has been executed.</li>
-                <li>The command lines are simple, no semicolons, no pipes, no redirections or any other advanced features.</li>
-                <li>The command lines are made only of one word. No arguments will be passed to programs.</li>
-                <li>If an executable cannot be found, print an error message and display the prompt again.</li>
-                <li>Handle errors.</li>
-                <li>You have to handle the “end of file” condition (Ctrl+D).</li>
-            </ul>
-            <li>You don’t have to:</li>
-            <ul>
-                <li>Use the PATH.</li>
-                <li>Implement built-ins.</li>
-                <li>Handle special characters : ", ', \, *, &, #.</li>
-                <li>Be able to move the cursor.</li>
-                <li>Handle commands with arguments.</li>
-            </ul>
-        </ul>
-    </ul>
-    execve will be the core part of your Shell, don’t forget to pass the environ to it…
-<br>
-<br>
+    <summary>
+        <b>2. Simple shell 0.1</b>
+    </summary>
+    <br>
 
-```
-julien@ubuntu:~/shell$ ./shell
+Write a UNIX command line interpreter.
+
+- Usage: `simple_shell`.
+
+Your Shell should:
+
+- Display a prompt and wait for the user to type a command. A command line always ends with a new line.
+- The prompt is displayed again each time a command has been executed.
+- The command lines are simple, no semicolons, no pipes, no redirections or any other advanced features.
+- The command lines are made only of one word. No arguments will be passed to programs.
+- If an executable cannot be found, print an error message and display the prompt again.
+- Handle errors.
+- You have to handle the “end of file” condition (`Ctrl+D`)
+
+You don’t have to:
+
+- Use the PATH.
+- Implement built-ins.
+- Handle special characters: `"`, `'`, `` ` ``, `\`, `*`, `&`, `#`.
+- Be able to move the cursor.
+- Handle commands with arguments.
+
+`execve` will be the core part of your Shell, don’t forget to pass the environ to it…
+
+```bash
+julien@ubuntu:~/shell$ ./shell 
 #cisfun$ ls
 ./shell: No such file or directory
 #cisfun$ /bin/ls
@@ -205,36 +205,43 @@ env-environ.c  exec    fork    mypid   ppid   printenv  promptc  shell     stat 
 julien@ubuntu:~/shell$ echo "/bin/ls" | ./shell
 barbie_j       env-main.c  exec.c  fork.c  pid.c  ppid.c    prompt   prompt.c  shell.c  stat.c         wait
 env-environ.c  exec    fork    mypid   ppid   printenv  promptc  shell     stat test_scripting.sh  wait.c
-#cisfun$ julien@ubuntu:~/shell$
+julien@ubuntu:~/shell$
 ```
+
+#
+**Repo:**
+- GitHub repository: `holbertonschool-simple_shell`.
+<hr>
 </details>
 
 <details>
-	<summary>
-		<b>Task 3. Simple shell 0.2</b>
-	</summary>
-	<ul>
-        <li>Simple shell 0.1 +</li>
-        <ul>
-            <li>Handle command lines with arguments</li>
-        </ul>
-    </ul>
+    <summary>
+        <b>3. Simple shell 0.2</b>
+    </summary>
+    <br>
+
+Simple shell 0.1 +
+
+- Handle command lines with arguments.
+
+#
+**Repo:**
+- GitHub repository: `holbertonschool-simple_shell`.
+<hr>
 </details>
 
 <details>
-	<summary>
-		<b>Task 4. Simple shell 0.3</b>
-	</summary>
-	<ul>
-        <li>Simple shell 0.2 +</li>
-        <ul>
-            <li>Handle the PATH.</li>
-            <li>fork must not be called if the command doesn’t exist.</li>
-        </ul>
-    </ul>
-<br>
+    <summary>
+        <b>4. Simple shell 0.3</b>
+    </summary>
+    <br>
 
-```
+Simple shell 0.2 +
+
+- Handle the `PATH`.
+- `fork` must not be called if the command doesn’t exist.
+
+```bash
 julien@ubuntu:~/shell$ ./shell_0.3
 :) /bin/ls
 barbie_j       env-main.c  exec.c  fork.c  pid.c  ppid.c    prompt   prompt.c  shell_0.3  stat    test_scripting.sh  wait.c
@@ -242,7 +249,7 @@ env-environ.c  exec    fork    mypid   ppid   printenv  promptc  shell     shell
 :) ls
 barbie_j       env-main.c  exec.c  fork.c  pid.c  ppid.c    prompt   prompt.c  shell_0.3  stat    test_scripting.sh  wait.c
 env-environ.c  exec    fork    mypid   ppid   printenv  promptc  shell     shell.c    stat.c  wait
-:) ls -l /tmp
+:) ls -l /tmp 
 total 20
 -rw------- 1 julien julien    0 Dec  5 12:09 config-err-aAMZrR
 drwx------ 3 root   root   4096 Dec  5 12:09 systemd-private-062a0eca7f2a44349733e78cb4abdff4-colord.service-V7DUzr
@@ -250,37 +257,44 @@ drwx------ 3 root   root   4096 Dec  5 12:09 systemd-private-062a0eca7f2a4434973
 drwx------ 3 root   root   4096 Dec  5 12:07 systemd-private-062a0eca7f2a44349733e78cb4abdff4-systemd-timesyncd.service-CdXUtH
 -rw-rw-r-- 1 julien julien    0 Dec  5 12:09 unity_support_test.0
 :) ^C
-julien@ubuntu:~/shell$
+julien@ubuntu:~/shell$ 
 ```
+
+#
+**Repo:**
+- GitHub repository: `holbertonschool-simple_shell`.
+<hr>
 </details>
 
 <details>
-	<summary>
-		<b>Task 5. Simple shell 0.4</b>
-	</summary>
-	<ul>
-        <li>Simple shell 0.3 +</li>
-        <ul>
-            <li>Implement the exit built-in, that exits the shell.</li>
-            <li>Usage: exit.</li>
-            <li>You don’t have to handle any argument to the built-in exit.</li>
-        </ul>
-    </ul>
+    <summary>
+        <b>5. Simple shell 0.4</b>
+    </summary>
+    <br>
+
+Simple shell 0.3 +
+
+- Implement the `exit` built-in, that exits the shell.
+- Usage: `exit`.
+- You don’t have to handle any argument to the built-in `exit`.
+
+#
+**Repo:**
+- GitHub repository: `holbertonschool-simple_shell`.
+<hr>
 </details>
 
 <details>
-	<summary>
-		<b>Task 6. Simple shell 1.0</b>
-	</summary>
-	<ul>
-        <li>Simple shell 0.4 +</li>
-        <ul>
-            <li>Implement the env built-in, that prints the current environment.</li>
-        </ul>
-    </ul>
-<br>
+    <summary>
+        <b>6. Simple shell 1.0</b>
+    </summary>
+    <br>
 
-```
+Simple shell 0.4 +
+
+- Implement the `env` built-in, that prints the current environment.
+
+```bash
 julien@ubuntu:~/shell$ ./simple_shell
 $ env
 USER=julien
@@ -296,133 +310,137 @@ TERM=xterm-256color
 PATH=/home/julien/bin:/home/julien/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 DISPLAY=:0
 $ exit
-julien@ubuntu:~/shell$
-```
-</details>
-
-
-### <span id="advanced-tasks">Advanced tasks</a>
-
-<details>
-	<summary>
-		<b>Task 12. Simple shell 0.4.2</b>
-	</summary>
-	<ul>
-        <li>Simple shell 0.4 +</li>
-        <li>Handle Ctrl+C: your shell should not quit when the user inputs ^C</li>
-man 2 signal.
-    </ul>
-<br>
-
-```
-julien@ubuntu:~/shell$ ./shell_0.4.2
-$ ^C
-$ ^C
-$ ^C
-$ ls /var
-backups  cache  crash  lib  local  lock  log  mail  metrics  opt  run  snap  spool  tmp
-$ ^C
-$ ^C
-$ ^C
-$ exit
 julien@ubuntu:~/shell$ 
 ```
+
+#
+**Repo:**
+- GitHub repository: `holbertonschool-simple_shell`.
+<hr>
+</details>
+
+### Advanced
+
+<details>
+    <summary>
+        <b>12. Simple shell 0.4.2</b>
+    </summary>
+    <br>
+
+Simple shell 0.4 +
+
+- Handle `Ctrl+C`: your shell should not quit when the user inputs `^C`.
+
+#
+**Repo:**
+- GitHub repository: `holbertonschool-simple_shell`.
+<hr>
 </details>
 
 <details>
-	<summary>
-		<b>Task 14. cd</b>
-	</summary>
-	<ul>
-        <li>Simple shell 1.0 +</li>
-        <li>Implement the builtin command cd:</li>
-        <ul>
-            <li>Changes the current directory of the process.</li>
-            <li>Command syntax: cd [DIRECTORY].</li>
-            <li>If no argument is given to cd the command must be interpreted like cd $HOME.</li>
-            <li>You have to handle the command cd -.</li>
-            <li>You have to update the environment variable PWD when you change directory.</li>
-        </ul>
-man chdir, man getcwd
-    </ul>
+    <summary>
+        <b>14. cd</b>
+    </summary>
+    <br>
+
+Simple shell 1.0 +
+
+Implement the builtin command `cd`:
+
+- Changes the current directory of the process.
+- Command syntax: `cd [DIRECTORY]`.
+- If no argument is given to `cd` the command must be interpreted like `cd $HOME`.
+- You have to handle the command `cd -`.
+- You have to update the environment variable `PWD` when you change directory.
+
+#
+**Repo:**
+- GitHub repository: `holbertonschool-simple_shell`.
+<hr>
 </details>
 
-## :bookmark_tabs: <span id="flowcharts">Flowcharts</a>
+## <span id="tech-stack">Tech stack</span>
 
-![Image](https://raw.githubusercontent.com/Pandolowitz/holbertonschool-simple_shell/master/resources/simple_shell_flowshart.png)
+<p align="left">
+    <img src="https://img.shields.io/badge/C-a8b9cc?logo=&logoColor=black&style=for-the-badge" alt="C badge">
+    <img src="https://img.shields.io/badge/GIT-f05032?logo=git&logoColor=white&style=for-the-badge" alt="Git badge">
+    <img src="https://img.shields.io/badge/GITHUB-181717?logo=github&logoColor=white&style=for-the-badge" alt="GitHub badge">
+    <img src="https://img.shields.io/badge/VIM-019733?logo=vim&logoColor=white&style=for-the-badge" alt="VIM badge">
+</p>
 
-## :open_file_folder: <span id="files-description">Files description</span>
+## <span id="files-description">Files description</span>
 
-|         FILE         |                                    DESCRIPTION                                    |
-| :------------------: | :-------------------------------------------------------------------------------: |
-|       resources      |                           contain images for README.md                            |
-|        AUTHORS       |             list of all contributors to the content of the repository             |
-|       README.md      |                              this readme file :wink:                              |
-|        args.c        |                 contains the argument and path management functions               |
-|      commands.c      |          contains functions to handles special commands like env, exit...         |
-|        env.c         |                     contains environment management functions                     |
-|        exec.c        |               contains function to executes a command with arguments              |
-|        main.c        |               contains the mains function of the shell (entry point)              |
-|        main.h        |                    includes libraries and function prototypes                     |
-|  man_1_simple_shell  |                            man page of the Simple Shell                           |
+| **FILES**            | **DESCRIPTION**                                                      |
+| :------------------: | -------------------------------------------------------------------- |
+| `assets`             | Contains the resources required for the repository.                  |
+| `main.h`             | Includes libraries and function prototypes.                          |
+| `main.c`             | Contains the main function of the shell (entry point).              |
+| `exec.c`             | Contains functions to execute a command with arguments.              |
+| `args.c`             | Contains the argument and path management functions.                 |
+| `env.c`              | Contains environment management functions.                           |
+| `commands.c`         | Contains functions to handle special commands like `env`, `exit`... |
+| `taieb.c`            | Contains a secret function for our SWE at Holberton School.          |
+| `man_1_simple_shell` | `man` page of the Simple Shell.                                      |
+| `AUTHORS`            | List of all contributors to the content of the repository.           |
+| `README.md`          | The README file you are currently reading 😉.                       |
 
-## :computer: <span id="install">How to install run and use our Simple Shell</a>
+## <span id="installation_and_how_to_use">Installation and how to use</span>
 
-### Install and run:
+**Installation:**
 
-To install and run Simple Shell, follow these steps:
+1. Clone this repository:
+    - Open your preferred Terminal.
+    - Navigate to the directory where you want to clone the repository.
+    - Run the following command:
 
-Clone the repository using the following command:
+```bash
+git clone https://github.com/fchavonet/holbertonschool-simple_shell.git
 ```
-git clone https://github.com/Pandolowitz/holbertonschool-simple_shell.git
-```
 
-Navigate to the directory where the repository was cloned.
+2. Open the repository you've just cloned.
 
-Compile the program by running the following command:
-```
+3. Compile the source code:
+
+```bash
 gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 ```
 
-Run the program by typing the following command:
-```
+**How to use:**
+
+1. Run the program:
+
+```bash
 ./hsh
 ```
 
-### Using the Simple Shell:
+2. To use Simple Shell, type a command and press Enter.
 
-To use Simple Shell, type a command and press Enter.
-<br>
-The program will execute the command and display the output on the screen.
+- Examples of commands that you can run:
+    - `ls`: list the contents of the current directory.
+    - `pwd`: print the path of the current working directory.
+    - `exit`: exit the simple shell.
 
-Here are some examples of commands that you can run:
+- You can also run commands that require arguments, such as:
+    - `ls -l`: list the contents of the current directory in long format.
+    - `mkdir 42`: create a new directory called "42".
+    - `echo "Hello, Hugo!"`: display the message "Hello, Hugo!" on the screen.
 
-- `ls`: list the contents of the current directory.
-- `pwd`: print the path of the current working directory.
-- `echo`: display a message on the screen.
-- `mkdir`: create a new directory.
-- `exit`: exit the shell.
+3. Open the MAN page:
 
-You can also run commands that require arguments, such as:
+```bash
+./man_1_simple_shell
+```
 
-- `ls -l`: list the contents of the current directory in long format.
-- `mkdir 42`: create a new directory called "42".
-- `echo "Hello, Hugo!"`: display the message "Hello, Hugo!" on the screen.
+> If the file does not open, you may need to grant execution permissions first.
 
-## :blue_book: <span id="man-page">MAN page</a>
+## <span id="thanks">Thanks</span>
 
-Execution: `man_1_simple_shell`
+A big thank you to all my Holberton School peers for their help and support throughout this project.
 
-![Image](https://raw.githubusercontent.com/Pandolowitz/holbertonschool-simple_shell/master/resources/man_page.png)
+## <span id="authors">Authors</span>
 
-## :hearts: <span id="thanks">Thanks</span>
-
-A big thank you to all our Holberton School peers for their help and support throughout this project.
-<br>
-
-## :construction_worker: <span id="authors">Authors</span>
 **Fabien CHAVONET**
-- Github: [@Pandolowitz](https://github.com/Pandolowitz)
+- GitHub: [@fchavonet](https://github.com/fchavonet)
 
 **Pierre-Émmanuel SAINT-MÉZARD**
 - Github: [@Eonvorax](https://github.com/Eonvorax)
