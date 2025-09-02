@@ -425,7 +425,7 @@ gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 3. Open the MAN page:
 
 ```bash
-./man_1_simple_shell
+man ./man_1_simple_shell
 ```
 
 > If the file does not open, you may need to grant execution permissions first.
